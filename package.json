@@ -1,18 +1,43 @@
 {
-  "name": "build-vs-code-extension:-near-",
-  "displayName": "Build VS Code Extension: NEAR Account Lookup",
+  "name": "near-account-lookup",
+  "displayName": "NEAR Account Lookup",
+  "description": "Hover over NEAR account IDs in VS Code to inspect balance, storage, and contract status.",
   "version": "1.0.0",
-  "engines": {
-    "vscode": "^1.85.0"
-  },
-  "activationEvents": [],
+  "publisher": "cleaner-squad",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished", "onCommand:nearAccountLookup.lookup"],
   "main": "./extension.js",
   "contributes": {
     "commands": [
-      {
-        "command": "extension.run",
-        "title": "Build VS Code Extension: NEAR Account Lookup"
+      { "command": "nearAccountLookup.lookup", "title": "NEAR Account Lookup: Lookup Account" }
+    ],
+    "configuration": {
+      "title": "NEAR Account Lookup",
+      "properties": {
+        "nearAccountLookup.rpcUrl": {
+          "type": "string",
+          "default": "https://rpc.mainnet.near.org",
+          "description": "NEAR JSON-RPC endpoint used for account lookups."
+        },
+        "nearAccountLookup.networkName": {
+          "type": "string",
+          "default": "mainnet",
+          "description": "Network label used in hover output and explorer links."
+        },
+        "nearAccountLookup.enableHover": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable hover cards for detected NEAR account IDs."
+        }
       }
-    ]
-  }
+    }
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "verify": "npm test && node -e \"JSON.parse(require('fs').readFileSync('package.json','utf8')); console.log('package ok')\""
+  },
+  "keywords": ["near", "vscode", "account", "blockchain"],
+  "license": "MIT",
+  "devDependencies": {}
 }

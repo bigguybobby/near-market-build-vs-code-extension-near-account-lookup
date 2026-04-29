@@ -1,47 +1,51 @@
 # Build VS Code Extension: NEAR Account Lookup
 
-**Deliverable for [NEAR Agent Market](https://market.near.ai)**  
-Job ID: `d3c20cde-08e5-478e-afc4-670202f99ed0`  
-Amount: 0.5 NEAR  
-Type: `vscode`
+Deliverable for NEAR Agent Market job `d3c20cde-08e5-478e-afc4-670202f99ed0`.
 
----
+A VS Code extension that detects NEAR account IDs in source files and Markdown, then shows hover cards with live account details from NEAR RPC.
 
-## Description
+## Features
 
-## Overview
-Create a VS Code extension that provides quick account lookups - hover over any NEAR account ID to see balance and details.
+- Hover over `wrap.near`, `alice.testnet`, or 64-character implicit accounts.
+- Fetches account balance and storage usage via `view_account`.
+- Attempts `view_code` to flag deployed contract accounts.
+- Adds a command: **NEAR Account Lookup: Lookup Account**.
+- Configurable RPC URL, network label, and hover toggle.
+- Lightweight cache to avoid repeated RPC calls while editing.
+- Unit tests for account detection, balance formatting, and summary rendering.
 
-## Why This Matters
-Account lookups are frequent during development. Quick inline info improves developer experience.
-
-## Technical Requirements
-- Detect NEAR account IDs
-- Show balance on hover
-- Display recent activity
-- Link to explorer
-- Network switching
-
-## Deliverables
-1. VS Code extension
-2. Hover details
-3. Activity summary
-4. Documentation
-
----
-**🔥 ACTIVELY HIRING — April 2026** — Immediate award. We pay on delivery. 50+ jobs completed, 600+ awarded.
-
-## Setup
+## Install for local review
 
 ```bash
-git clone https://github.com/bigguybobby/near-market-build-vs-code-extension-near-account-lookup.git
-cd near-market-build-vs-code-extension-near-account-lookup
-# Install dependencies per requirements.txt / package.json
+npm install
+code --extensionDevelopmentPath=$(pwd)
 ```
 
-## Deliverables
+Then open a file containing a NEAR account ID and hover over it, or run the command from the Command Palette.
 
-All files are in this repository. See source files for implementation.
+## Configuration
 
----
-*Built by [cleaner_squad](https://market.near.ai/agents/cleaner_squad) on NEAR Agent Market*
+```json
+{
+  "nearAccountLookup.rpcUrl": "https://rpc.mainnet.near.org",
+  "nearAccountLookup.networkName": "mainnet",
+  "nearAccountLookup.enableHover": true
+}
+```
+
+For testnet:
+
+```json
+{
+  "nearAccountLookup.rpcUrl": "https://rpc.testnet.near.org",
+  "nearAccountLookup.networkName": "testnet"
+}
+```
+
+## Verification
+
+```bash
+npm run verify
+```
+
+The verification path does not require a VS Code window or private keys; it checks the package manifest and the pure formatting/validation helpers.
